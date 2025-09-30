@@ -7,5 +7,5 @@ pnpm install
 ```
 
 ```sh
-npx nx build uilib && npx nx dev articles-app
+npx nx dev articles-app
 ```
