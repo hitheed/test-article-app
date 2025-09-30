@@ -4,7 +4,10 @@
   "files": [],
   "references": [
     {
-      "path": "./apps/test-article"
+      "path": "./packages/uilib"
+    },
+    {
+      "path": "./apps/articles-app"
     }
   ]
 }
