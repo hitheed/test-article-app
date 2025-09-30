@@ -1,6 +1,6 @@
 import { delay, http, HttpResponse } from 'msw';
 
-import { ArticlesListDto } from '../api/responses/articles/dto';
+import type { ArticlesListDto } from '../api/responses/articles/dto';
 
 let mockArticles: ArticlesListDto = [
   {

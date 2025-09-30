@@ -1,14 +1,19 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
-import { UilibButton, UilibCard, UilibLoader } from "@test-article/uilib";
+import { useMemo } from 'react';
+import { createFileRoute } from '@tanstack/react-router';
+import { UilibLoader } from "@test-article/uilib";
 
-import { trimText } from '../utils/helpers/trimText';
 import { useArticlesListQuery } from '../hooks/articles/useArticlesListQuery';
-import { useArticleDeleteQuery } from '../hooks/articles/useArticleDeleteQuery';
 import type { ArticleDto } from '../api/responses/articles/dto';
+import { ArticleItem } from '../components/Article/ArticleItem';
+import { useArticleDeleteQuery } from '../hooks/articles/useArticleDeleteQuery';
 
 const Index = () => {
   const { data, isLoading, error } = useArticlesListQuery();
   const deleteArticle = useArticleDeleteQuery();
+
+  const filteredArticles = useMemo(() => {
+    return data?.data?.sort((a: ArticleDto, b: ArticleDto) => a.title.localeCompare(b.title));
+  }, [data]);
 
   if (isLoading) return <UilibLoader />;
   if (error) return <div>Ошибка загрузки статей</div>;
@@ -22,31 +27,13 @@ const Index = () => {
       </div>}
 
       <div className="grid grid-flow-row-dense grid-cols-3 gap-6">
-        {data.data?.map((item: ArticleDto) => (
-            <UilibCard
-              title={item.title}
-              actions={
-                <div className="flex items-center justify-end gap-4">
-                  <Link
-                    to="/article/$articleId"
-                    params={{ articleId: item.id }}
-                  >
-                    Читать далее
-                  </Link>
-                  <UilibButton
-                    variant="danger"
-                    pending={item.id === deleteArticle.variables && deleteArticle.isPending}
-                    onClick={() => deleteArticle.mutate(item.id)}
-                  >
-                    Удалить
-                  </UilibButton>
-                </div>
-              }
-              key={item.id}
-            >
-              {trimText(item.content, 100)}
-            </UilibCard>
-        ))}
+        {filteredArticles?.map((item: ArticleDto) =>
+          <ArticleItem
+            key={item.id}
+            item={item}
+            deleteArticle={deleteArticle}
+          />
+        )}
       </div>
     </div>
   )
