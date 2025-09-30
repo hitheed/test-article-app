@@ -5,8 +5,7 @@
   "scripts": {
     "generate-routes": "tsr generate",
     "watch-routes": "tsr watch",
-    "build": "pnpm run generate-routes && pnpm run build",
-    "dev": "npx nx build uilib && pnpm dev"
+    "build": "pnpm run generate-routes && pnpm run build"
   },
   "devDependencies": {
     "@tanstack/router-cli": "^1.132.21",
