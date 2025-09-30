@@ -19,7 +19,7 @@ export function UilibButton(props: IButton) {
   ) : props.children;
 
   return (
-    <button {...props} className={`${baseClasses} ${variantClasses}`}>
+    <button {...props} className={`${baseClasses} ${variantClasses} rounded-lg`}>
       {content}
     </button>
   );
